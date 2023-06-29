@@ -107,7 +107,7 @@ type FcInterfaceSvm struct {
 	Resource
 	DataProtocol string `json:"data_protocol,omitempty"`
 	Location     struct {
-		port FcPortReference `json:"port,omitempty"`
+		Port FcPortReference `json:"port,omitempty"`
 	} `json:"location,omitempty"`
 }
 
