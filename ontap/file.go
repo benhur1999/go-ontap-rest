@@ -120,7 +120,7 @@ func (c *Client) FileDelete(volumeUuid string, filePath string, parameters []str
 	}
 	if job, err = c.JobWaitUntilComplete(jobLink.JobLink.GetRef()); err == nil && job != nil {
 		if job.State == "failure" {
-			err = fmt.Errorf("Error: REST code=%d, REST message=\"%s\"", job.Code, job.Message)
+			err = fmt.Errorf("error: REST code=%d, REST message=\"%s\"", job.Code, job.Message)
 		}
 	}
 	return

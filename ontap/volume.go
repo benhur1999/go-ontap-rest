@@ -332,7 +332,7 @@ func (c *Client) VolumeCreate(volume *Volume, parameters []string) (res *RestRes
 	}
 	if job, err = c.JobWaitUntilComplete(jobLink.JobLink.GetRef()); err == nil {
 		if job != nil && job.State == "failure" {
-			err = fmt.Errorf("Error: REST code=%d, REST message=\"%s\"", job.Code, job.Message)
+			err = fmt.Errorf("error: REST code=%d, REST message=\"%s\"", job.Code, job.Message)
 		}
 	}
 	return
@@ -350,7 +350,7 @@ func (c *Client) VolumeModify(href string, volume *Volume, parameters []string) 
 	}
 	if job, err = c.JobWaitUntilComplete(jobLink.JobLink.GetRef()); err == nil {
 		if job != nil && job.State == "failure" {
-			err = fmt.Errorf("Error: REST code=%d, REST message=\"%s\"", job.Code, job.Message)
+			err = fmt.Errorf("error: REST code=%d, REST message=\"%s\"", job.Code, job.Message)
 		}
 	}
 	return
@@ -368,7 +368,7 @@ func (c *Client) VolumeDelete(href string, parameters []string) (res *RestRespon
 	}
 	if job, err = c.JobWaitUntilComplete(jobLink.JobLink.GetRef()); err == nil {
 		if job != nil && job.State == "failure" {
-			err = fmt.Errorf("Error: REST code=%d, REST message=\"%s\"", job.Code, job.Message)
+			err = fmt.Errorf("error: REST code=%d, REST message=\"%s\"", job.Code, job.Message)
 		}
 	}
 	return

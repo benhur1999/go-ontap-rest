@@ -256,12 +256,12 @@ func newHTTPError(resp *http.Response) (restResp *RestResponse, err error) {
 	if err = json.NewDecoder(resp.Body).Decode(&errResponse); err == nil {
 		defer resp.Body.Close()
 		if len(errResponse.Error.Target) > 0 {
-			err = fmt.Errorf("Error: HTTP code=%d, HTTP status=\"%s\", REST code=\"%s\", REST message=\"%s\", REST target=\"%s\"", resp.StatusCode, http.StatusText(resp.StatusCode), errResponse.Error.Code, errResponse.Error.Message, errResponse.Error.Target)
+			err = fmt.Errorf("error: HTTP code=%d, HTTP status=\"%s\", REST code=\"%s\", REST message=\"%s\", REST target=\"%s\"", resp.StatusCode, http.StatusText(resp.StatusCode), errResponse.Error.Code, errResponse.Error.Message, errResponse.Error.Target)
 		} else {
-			err = fmt.Errorf("Error: HTTP code=%d, HTTP status=\"%s\", REST code=\"%s\", REST message=\"%s\"", resp.StatusCode, http.StatusText(resp.StatusCode), errResponse.Error.Code, errResponse.Error.Message)
+			err = fmt.Errorf("error: HTTP code=%d, HTTP status=\"%s\", REST code=\"%s\", REST message=\"%s\"", resp.StatusCode, http.StatusText(resp.StatusCode), errResponse.Error.Code, errResponse.Error.Message)
 		}
 	} else {
-		err = fmt.Errorf("Error: HTTP code=%d, HTTP status=\"%s\"", resp.StatusCode, http.StatusText(resp.StatusCode))
+		err = fmt.Errorf("error: HTTP code=%d, HTTP status=\"%s\"", resp.StatusCode, http.StatusText(resp.StatusCode))
 	}
 	restResp = &RestResponse{
 		ErrorResponse: errResponse,

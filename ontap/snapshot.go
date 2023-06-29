@@ -73,7 +73,7 @@ func (c *Client) SnapshotCreate(volumeUuid string, snapshot *Snapshot) (res *Res
 	}
 	if job, err = c.JobWaitUntilComplete(jobLink.JobLink.GetRef()); err == nil {
 		if job != nil && job.State == "failure" {
-			err = fmt.Errorf("Error: REST code=%d, REST message=\"%s\"", job.Code, job.Message)
+			err = fmt.Errorf("error: REST code=%d, REST message=\"%s\"", job.Code, job.Message)
 		}
 	}
 	return
@@ -91,7 +91,7 @@ func (c *Client) SnapshotModify(href string, snapshot *Snapshot) (res *RestRespo
 	}
 	if job, err = c.JobWaitUntilComplete(jobLink.JobLink.GetRef()); err == nil {
 		if job != nil && job.State == "failure" {
-			err = fmt.Errorf("Error: REST code=%d, REST message=\"%s\"", job.Code, job.Message)
+			err = fmt.Errorf("error: REST code=%d, REST message=\"%s\"", job.Code, job.Message)
 		}
 	}
 	return
@@ -109,7 +109,7 @@ func (c *Client) SnapshotDelete(href string) (res *RestResponse, err error) {
 	}
 	if job, err = c.JobWaitUntilComplete(jobLink.JobLink.GetRef()); err == nil {
 		if job != nil && job.State == "failure" {
-			err = fmt.Errorf("Error: REST code=%d, REST message=\"%s\"", job.Code, job.Message)
+			err = fmt.Errorf("error: REST code=%d, REST message=\"%s\"", job.Code, job.Message)
 		}
 	}
 	return
