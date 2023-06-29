@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-type Aggregate struct {
+type AggregateSvm struct {
 	Resource
 	AvailableSize int64  `json:"available_size"`
 	Type          string `json:"type"`
@@ -128,7 +128,7 @@ type S3Service struct {
 
 type Svm struct {
 	Resource
-	Aggregates          []Aggregate      `json:"aggregates,omitempty"`
+	Aggregates          []AggregateSvm   `json:"aggregates,omitempty"`
 	AggregatesDelegated bool             `json:"aggregates_delegated"`
 	Certificate         Resource         `json:"certificate,omitempty"`
 	Cifs                Cifs             `json:"cifs,omitempty"`
