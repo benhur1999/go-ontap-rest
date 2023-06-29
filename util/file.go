@@ -1,10 +1,10 @@
 package util
 
 import (
-	"io"
 	"fmt"
-	"path/filepath"
+	"io"
 	"net"
+	"path/filepath"
 
 	"github.com/igor-feoktistov/go-ontap-rest/ontap"
 	"github.com/vmware/go-nfs-client/nfs"
@@ -12,7 +12,7 @@ import (
 )
 
 const (
-    HTTP_MAX_WRITE_SIZE = 1024*1024
+	HTTP_MAX_WRITE_SIZE = 1024 * 1024
 )
 
 func UploadFileAPI(c *ontap.Client, svmName string, volumeName string, filePath string, r io.Reader) (bytesUploaded int64, err error) {
@@ -25,30 +25,30 @@ func UploadFileAPI(c *ontap.Client, svmName string, volumeName string, filePath 
 		var n int
 		var read_err, write_err error
 		n, read_err = r.Read(inb)
-    		if n > 0 {
-    			bytesWritten := 0
-    			if bytesUploaded > 0 {
+		if n > 0 {
+			bytesWritten := 0
+			if bytesUploaded > 0 {
 				bytesWritten, _, write_err = c.FileWrite("PATCH", volume.Uuid, filePath, []string{}, inb[:n])
-    			} else {
+			} else {
 				bytesWritten, _, write_err = c.FileWrite("POST", volume.Uuid, filePath, []string{}, inb[:n])
-    			}
+			}
 			if write_err != nil {
 				err = write_err
 				break
 			}
 			if bytesWritten != n {
-    				err = fmt.Errorf("UploadFileAPI(): short write: requested %d, written %d", n, bytesWritten)
-    				break
+				err = fmt.Errorf("UploadFileAPI(): short write: requested %d, written %d", n, bytesWritten)
+				break
 			}
 			bytesUploaded += int64(n)
-    		}
-    		if read_err == io.EOF {
-        		break
-    		}
-    		if read_err != nil {
-    			err = read_err
-        		break
-    		}
+		}
+		if read_err == io.EOF {
+			break
+		}
+		if read_err != nil {
+			err = read_err
+			break
+		}
 	}
 	return
 }
@@ -102,7 +102,7 @@ func DownloadFileAPI(c *ontap.Client, svmName string, volumeName string, filePat
 	var files []ontap.FileInfo
 	dirPath := filepath.Dir(filePath)
 	fileName := filepath.Base(filePath)
-	if files, _, err = c.FileGetIter(volumes[0].Uuid, dirPath, []string{"type=file","name=" + fileName,"fields=size"}); err != nil {
+	if files, _, err = c.FileGetIter(volumes[0].Uuid, dirPath, []string{"type=file", "name=" + fileName, "fields=size"}); err != nil {
 		return
 	}
 	if len(files) == 0 {
@@ -117,48 +117,48 @@ func createDirPath(c *ontap.Client, svmName string, volumeName string, filePath 
 	var response *ontap.RestResponse
 	var dirList []string
 	var volumes []ontap.Volume
-        if volumes, _, err = c.VolumeGetIter([]string{"svm.name=" + svmName,"name=" + volumeName,"fields=nas"}); err != nil {
-    		return
-    	}
-    	if len(volumes) == 0 {
-    		err = fmt.Errorf("createDirPath(): no volume \"%s\" found", volumeName)
-    		return
-    	}
-    	volume = &volumes[0]
+	if volumes, _, err = c.VolumeGetIter([]string{"svm.name=" + svmName, "name=" + volumeName, "fields=nas"}); err != nil {
+		return
+	}
+	if len(volumes) == 0 {
+		err = fmt.Errorf("createDirPath(): no volume \"%s\" found", volumeName)
+		return
+	}
+	volume = &volumes[0]
 	for dir := filepath.Dir(filePath); dir != "/" && dir != "."; dir = filepath.Dir(dir) {
 		dirList = append(dirList, dir)
 	}
 	for i := len(dirList) - 1; i >= 0; i-- {
-		if _, response, err = c.FileGetIter(volume.Uuid, dirList[i], []string{"type=directory","return_metadata=true"}); err != nil {
-    			if response.ErrorResponse.Error.Code == ontap.ERROR_NO_SUCH_FILE_OR_DIR {
-    				unixPermissions := 755
-            			fileInfo := ontap.FileInfo{
-					Type: "directory",
+		if _, response, err = c.FileGetIter(volume.Uuid, dirList[i], []string{"type=directory", "return_metadata=true"}); err != nil {
+			if response.ErrorResponse.Error.Code == ontap.ERROR_NO_SUCH_FILE_OR_DIR {
+				unixPermissions := 755
+				fileInfo := ontap.FileInfo{
+					Type:            "directory",
 					UnixPermissions: &unixPermissions,
 				}
 				if _, _, err = c.FileCreate(volumes[0].Uuid, dirList[i], &fileInfo); err != nil {
 					break
 				}
-    			} else {
-    				break
-    			}
-    		}
-    	}
-    	return
+			} else {
+				break
+			}
+		}
+	}
+	return
 }
 
 func createExportPolicyRule(c *ontap.Client, svmName string, policyName string, clientIP string) (err error) {
 	var exportPolicies []ontap.ExportPolicy
-	if exportPolicies, _, err = c.ExportPolicyGetIter([]string{"svm.name=" + svmName,"name=" + policyName}); err != nil {
+	if exportPolicies, _, err = c.ExportPolicyGetIter([]string{"svm.name=" + svmName, "name=" + policyName}); err != nil {
 		return
 	}
 	if len(exportPolicies) > 0 {
 		rule := ontap.ExportPolicyRule{
 			AnonymousUser: "root",
-			Protocols: []string{"any"},
-			RoRule: []string{"any"},
-			RwRule: []string{"any"},
-			Superuser: []string{"any"},
+			Protocols:     []string{"any"},
+			RoRule:        []string{"any"},
+			RwRule:        []string{"any"},
+			Superuser:     []string{"any"},
 			Clients: []ontap.ExportRuleClient{
 				ontap.ExportRuleClient{
 					Match: clientIP,
@@ -167,14 +167,14 @@ func createExportPolicyRule(c *ontap.Client, svmName string, policyName string, 
 		}
 		_, err = c.ExportPolicyRuleCreate(exportPolicies[0].GetRef(), &rule)
 	} else {
-    		err = fmt.Errorf("createExportPolicyRule(): no export-policy \"%s\" found", policyName)
+		err = fmt.Errorf("createExportPolicyRule(): no export-policy \"%s\" found", policyName)
 	}
 	return
 }
 
 func deleteExportPolicyRule(c *ontap.Client, svmName string, policyName string, clientIP string) (err error) {
 	var exportPolicies []ontap.ExportPolicy
-	if exportPolicies, _, err = c.ExportPolicyGetIter([]string{"svm.name=" + svmName,"name=" + policyName}); err != nil {
+	if exportPolicies, _, err = c.ExportPolicyGetIter([]string{"svm.name=" + svmName, "name=" + policyName}); err != nil {
 		return
 	}
 	if len(exportPolicies) > 0 {
@@ -185,10 +185,10 @@ func deleteExportPolicyRule(c *ontap.Client, svmName string, policyName string, 
 		if len(rules) > 0 {
 			_, err = c.ExportPolicyRuleDelete(rules[0].GetRef())
 		} else {
-    			err = fmt.Errorf("deleteExportPolicyRule(): no export-policy rule found")
+			err = fmt.Errorf("deleteExportPolicyRule(): no export-policy rule found")
 		}
 	} else {
-    		err = fmt.Errorf("createExportPolicyRule(): no export-policy \"%s\" found", policyName)
+		err = fmt.Errorf("createExportPolicyRule(): no export-policy \"%s\" found", policyName)
 	}
 	return
 }

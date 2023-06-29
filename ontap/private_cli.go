@@ -6,8 +6,8 @@ import (
 
 type PrivateCliVolumeNode struct {
 	Vserver string `json:"vserver,omitempty"`
-	Volume string  `json:"volume,omitempty"`
-	Node string    `json:"node,omitempty"`
+	Volume  string `json:"volume,omitempty"`
+	Node    string `json:"node,omitempty"`
 }
 
 type PrivateCliVolumeNodeResponse struct {
@@ -16,10 +16,10 @@ type PrivateCliVolumeNodeResponse struct {
 }
 
 type LunCreateFromFileRequest struct {
-	LunPath string         `json:"path"`
-	FilePath string        `json:"file-path"`
-	OsType string          `json:"ostype"`
-	SpaceReserve string    `json:"space-reserve,omitempty"`
+	LunPath         string `json:"path"`
+	FilePath        string `json:"file-path"`
+	OsType          string `json:"ostype"`
+	SpaceReserve    string `json:"space-reserve,omitempty"`
 	SpaceAllocation string `json:"space-allocation,omitempty"`
 }
 

@@ -9,12 +9,12 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"mime/multipart"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
-	"strings"
-	"mime/multipart"
 	"path"
+	"strings"
 	"time"
 )
 
@@ -24,11 +24,11 @@ const (
 )
 
 type Client struct {
-	client             *http.Client
-	BaseURL            *url.URL
-	UserAgent          string
-	options		   *ClientOptions
-	ResponseTimeout	   time.Duration
+	client          *http.Client
+	BaseURL         *url.URL
+	UserAgent       string
+	options         *ClientOptions
+	ResponseTimeout time.Duration
 }
 
 type ClientOptions struct {
@@ -40,13 +40,13 @@ type ClientOptions struct {
 }
 
 type Resource struct {
-	Name string                 `json:"name,omitempty"`
-	Uuid string                 `json:"uuid,omitempty"`
+	Name  string `json:"name,omitempty"`
+	Uuid  string `json:"uuid,omitempty"`
 	Links *struct {
 		Self struct {
 			Href string `json:"href,omitempty"`
-		}                   `json:"self,omitempty"`
-	}                           `json:"_links,omitempty"`
+		} `json:"self,omitempty"`
+	} `json:"_links,omitempty"`
 }
 
 type NameReference struct {
@@ -63,36 +63,36 @@ func (r *Resource) GetRef() string {
 }
 
 type BaseResponse struct {
-	NumRecords int              `json:"num_records"`
-	Links struct {
+	NumRecords int `json:"num_records"`
+	Links      struct {
 		Self struct {
 			Href string `json:"href,omitempty"`
-		}                   `json:"self,omitempty"`
+		} `json:"self,omitempty"`
 		Next struct {
 			Href string `json:"href,omitempty"`
-		}                   `json:"next,omitempty"`
-	}                           `json:"_links,omitempty"`
+		} `json:"next,omitempty"`
+	} `json:"_links,omitempty"`
 }
 
 type ErrorResponse struct {
 	Error struct {
 		Message string `json:"message"`
-		Code string    `json:"code"`
-		Target string  `json:"target"`
-	}                      `json:"error"`
+		Code    string `json:"code"`
+		Target  string `json:"target"`
+	} `json:"error"`
 }
 
 type RestResponse struct {
 	ErrorResponse ErrorResponse
-	HttpResponse *http.Response
+	HttpResponse  *http.Response
 }
 
 type DhHmacChapProtocol struct {
-        ControllerSecretKey string `json:"controller_secret_key,omitempty"`
-        GroupSize string           `json:"group_size,omitempty"`
-        HashFunction string        `json:"hash_function,omitempty"`
-        HostSecretKey string       `json:"host_secret_key,omitempty"`
-        Mode string                `json:"mode,omitempty"`
+	ControllerSecretKey string `json:"controller_secret_key,omitempty"`
+	GroupSize           string `json:"group_size,omitempty"`
+	HashFunction        string `json:"hash_function,omitempty"`
+	HostSecretKey       string `json:"host_secret_key,omitempty"`
+	Mode                string `json:"mode,omitempty"`
 }
 
 func (res *BaseResponse) IsPaginate() bool {
@@ -119,7 +119,7 @@ func NewClient(endpoint string, options *ClientOptions) *Client {
 	if options == nil {
 		options = DefaultOptions()
 	}
-	httpClient := &http.Client {
+	httpClient := &http.Client{
 		Timeout: options.Timeout,
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{
@@ -187,10 +187,10 @@ func (c *Client) NewFormFileRequest(method string, apiPath string, parameters []
 	}
 	u, _ := c.BaseURL.Parse(extendedPath)
 	b := new(bytes.Buffer)
-    	writer := multipart.NewWriter(b)
-    	fileName := path.Base(strings.ReplaceAll(apiPath, "%2F", "/"))
-    	var part io.Writer
-    	if part, err = writer.CreateFormFile("file", fileName); err != nil {
+	writer := multipart.NewWriter(b)
+	fileName := path.Base(strings.ReplaceAll(apiPath, "%2F", "/"))
+	var part io.Writer
+	if part, err = writer.CreateFormFile("file", fileName); err != nil {
 		return
 	}
 	part.Write(body)
@@ -265,7 +265,7 @@ func newHTTPError(resp *http.Response) (restResp *RestResponse, err error) {
 	}
 	restResp = &RestResponse{
 		ErrorResponse: errResponse,
-		HttpResponse: resp,
+		HttpResponse:  resp,
 	}
 	return
 }

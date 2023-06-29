@@ -2,64 +2,64 @@ package ontap
 
 import (
 	"fmt"
-	"strings"
-	"net/http"
 	"io"
 	"io/ioutil"
 	"mime"
 	"mime/multipart"
+	"net/http"
 	"path"
+	"strings"
 )
 
 type FileInfo struct {
 	Resource
 	AccessedTime string `json:"accessed_time,omitempty"`
-	Analytics *struct {
+	Analytics    *struct {
 		ByAccessedTime *struct {
 			BytesUsed *struct {
-				Labels []string       `json:"labels,omitempty"`
+				Labels      []string  `json:"labels,omitempty"`
 				NewestLabel []string  `json:"newest_label,omitempty"`
 				OldestLabel []string  `json:"oldest_label,omitempty"`
 				Percentages []float32 `json:"percentages,omitempty"`
-				Values []int          `json:"values,omitempty"`
-			}                             `json:"bytes_used ,omitempty"`
-		}                                     `json:"by_accessed_time,omitempty"`
+				Values      []int     `json:"values,omitempty"`
+			} `json:"bytes_used ,omitempty"`
+		} `json:"by_accessed_time,omitempty"`
 		ByModifiedTime *struct {
 			BytesUsed *struct {
-				Labels []string       `json:"labels,omitempty"`
+				Labels      []string  `json:"labels,omitempty"`
 				NewestLabel []string  `json:"newest_label,omitempty"`
 				OldestLabel []string  `json:"oldest_label,omitempty"`
 				Percentages []float32 `json:"percentages,omitempty"`
-				Values []int          `json:"values,omitempty"`
-			}                             `json:"bytes_used ,omitempty"`
-		}                                     `json:"by_modified_time,omitempty"`
-		BytesUsed int                         `json:"bytes_used"`
-		FileCount int                         `json:"file_count"`
-		SubdirCount int                       `json:"subdir_count"`
-	}                                             `json:"analytics,omitempty"`
-	BytesUsed *int                                `json:"bytes_used,omitempty"`
-	ChangedTime string                            `json:"changed_time,omitempty"`
-	CreationTime string                           `json:"creation_time,omitempty"`
-	FillEnabled *bool                             `json:"fill_enabled,omitempty"`
-	GroupId *int                                  `json:"group_id,omitempty"`
-	HardLinksCount *int                           `json:"hard_links_count,omitempty"`
-	InodeGeneration *int                          `json:"inode_generation,omitempty"`
-	InodeNumber *int                              `json:"inode_number,omitempty"`
-	IsEmpty *bool                                 `json:"is_empty,omitempty"`
-	IsJunction *bool                              `json:"is_junction,omitempty"`
-	IsSnapshot *bool                              `json:"is_snapshot,omitempty"`
-	IsVmAligned *bool                             `json:"is_vm_aligned,omitempty"`
-	ModifiedTime string                           `json:"modified_time,omitempty"`
-	OverwriteEnabled *bool                        `json:"overwrite_enabled,omitempty"`
-	OwnerId *int                                  `json:"owner_id,omitempty"`
-	Path string                                   `json:"path,omitempty"`
-	QosPolicy *Resource                           `json:"qos_policy,omitempty"`
-	Size *int                                     `json:"size,omitempty"`
-	Target string                                 `json:"target,omitempty"`
-	Type string                                   `json:"type,omitempty"`
-	UniqueBytes *int                              `json:"unique_bytes,omitempty"`
-	UnixPermissions *int                          `json:"unix_permissions,omitempty"`
-	Volume *Resource                              `json:"volume,omitempty"`
+				Values      []int     `json:"values,omitempty"`
+			} `json:"bytes_used ,omitempty"`
+		} `json:"by_modified_time,omitempty"`
+		BytesUsed   int `json:"bytes_used"`
+		FileCount   int `json:"file_count"`
+		SubdirCount int `json:"subdir_count"`
+	} `json:"analytics,omitempty"`
+	BytesUsed        *int      `json:"bytes_used,omitempty"`
+	ChangedTime      string    `json:"changed_time,omitempty"`
+	CreationTime     string    `json:"creation_time,omitempty"`
+	FillEnabled      *bool     `json:"fill_enabled,omitempty"`
+	GroupId          *int      `json:"group_id,omitempty"`
+	HardLinksCount   *int      `json:"hard_links_count,omitempty"`
+	InodeGeneration  *int      `json:"inode_generation,omitempty"`
+	InodeNumber      *int      `json:"inode_number,omitempty"`
+	IsEmpty          *bool     `json:"is_empty,omitempty"`
+	IsJunction       *bool     `json:"is_junction,omitempty"`
+	IsSnapshot       *bool     `json:"is_snapshot,omitempty"`
+	IsVmAligned      *bool     `json:"is_vm_aligned,omitempty"`
+	ModifiedTime     string    `json:"modified_time,omitempty"`
+	OverwriteEnabled *bool     `json:"overwrite_enabled,omitempty"`
+	OwnerId          *int      `json:"owner_id,omitempty"`
+	Path             string    `json:"path,omitempty"`
+	QosPolicy        *Resource `json:"qos_policy,omitempty"`
+	Size             *int      `json:"size,omitempty"`
+	Target           string    `json:"target,omitempty"`
+	Type             string    `json:"type,omitempty"`
+	UniqueBytes      *int      `json:"unique_bytes,omitempty"`
+	UnixPermissions  *int      `json:"unix_permissions,omitempty"`
+	Volume           *Resource `json:"volume,omitempty"`
 }
 
 type FileInfoResponse struct {
@@ -137,7 +137,7 @@ func (c *Client) FileWrite(method string, volumeUuid string, filePath string, pa
 	r := FileWriteResponse{}
 	if res, err = c.Do(req, &r); err == nil {
 		bytesWritten = r.BytesWritten
-	}		
+	}
 	return
 }
 

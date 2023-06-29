@@ -1,21 +1,21 @@
 package ontap
 
 import (
-	"net/http"
 	"fmt"
+	"net/http"
 )
 
 type Snapshot struct {
 	Resource
-	Comment string            `json:"comment,omitempty"`
-	CreateTime string         `json:"create_time,omitempty"`
-	ExpiryTime string         `json:"expiry_time,omitempty"`
-	Owners []string           `json:"owners,omitempty"`
-	SnaplockExpiryTime string `json:"snaplock_expiry_time,omitempty"`
-	SnapmirrorLabel string    `json:"snapmirror_label,omitempty"`
-	State string              `json:"state,omitempty"`
-	Svm *Resource             `json:"svm,omitempty"`
-	Volume *Resource          `json:"volume,omitempty"`
+	Comment            string    `json:"comment,omitempty"`
+	CreateTime         string    `json:"create_time,omitempty"`
+	ExpiryTime         string    `json:"expiry_time,omitempty"`
+	Owners             []string  `json:"owners,omitempty"`
+	SnaplockExpiryTime string    `json:"snaplock_expiry_time,omitempty"`
+	SnapmirrorLabel    string    `json:"snapmirror_label,omitempty"`
+	State              string    `json:"state,omitempty"`
+	Svm                *Resource `json:"svm,omitempty"`
+	Volume             *Resource `json:"volume,omitempty"`
 }
 
 type SnapshotResponse struct {

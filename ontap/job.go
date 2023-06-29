@@ -7,13 +7,13 @@ import (
 
 type Job struct {
 	Resource
-	Code int           `json:"code"`
-	Description string `json:"description,omitempty"`
-	EndTime string     `json:"end_time,omitempty"`
-	Message string     `json:"message,omitempty"`
-	StartTime string   `json:"start_time,omitempty"`
-	State string       `json:"state,omitempty"`
-	Svm *Resource      `json:"svm,omitempty"`
+	Code        int       `json:"code"`
+	Description string    `json:"description,omitempty"`
+	EndTime     string    `json:"end_time,omitempty"`
+	Message     string    `json:"message,omitempty"`
+	StartTime   string    `json:"start_time,omitempty"`
+	State       string    `json:"state,omitempty"`
+	Svm         *Resource `json:"svm,omitempty"`
 }
 
 type JobLinkResponse struct {

@@ -6,7 +6,7 @@ import (
 
 type IgroupInitiator struct {
 	Resource
-	Igroup *Resource `json:"igroup,omitempty"`
+	Igroup           *Resource   `json:"igroup,omitempty"`
 	IgroupInitiators *[]Resource `json:"records,omitempty"`
 }
 
@@ -14,15 +14,15 @@ type IgroupInitiatorResponse struct {
 	BaseResponse
 	IgroupInitiators []IgroupInitiator `json:"records,omitempty"`
 }
-	
+
 type Igroup struct {
 	Resource
-	DeleteOnUnmap *bool          `json:"delete_on_unmap,omitempty"`
-	Initiators []IgroupInitiator `json:"initiators,omitempty"`
-	LunMaps []LunMap             `json:"lun_maps,omitempty"`
-	OsType string                `json:"os_type,omitempty"`
-	Protocol string              `json:"protocol,omitempty"`
-	Svm *Resource                `json:"svm,omitempty"`
+	DeleteOnUnmap *bool             `json:"delete_on_unmap,omitempty"`
+	Initiators    []IgroupInitiator `json:"initiators,omitempty"`
+	LunMaps       []LunMap          `json:"lun_maps,omitempty"`
+	OsType        string            `json:"os_type,omitempty"`
+	Protocol      string            `json:"protocol,omitempty"`
+	Svm           *Resource         `json:"svm,omitempty"`
 }
 
 type IgroupResponse struct {

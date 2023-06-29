@@ -1,94 +1,94 @@
 package ontap
 
 import (
-        "fmt"
+	"fmt"
 	"net/http"
 )
 
 type NvmeNamespaceLocation struct {
-	Namespace string     `json:"namespace,omitempty"`
-	Node *Resource       `json:"node,omitempty"`
-	Qtree *QtreeResource `json:"qtree,omitempty"`
-	Volume *Resource     `json:"volume,omitempty"`
+	Namespace string         `json:"namespace,omitempty"`
+	Node      *Resource      `json:"node,omitempty"`
+	Qtree     *QtreeResource `json:"qtree,omitempty"`
+	Volume    *Resource      `json:"volume,omitempty"`
 }
 
 type NvmeNamespaceSpaceGuarantee struct {
 	Requested bool `json:"requested"`
-	Reserved bool  `json:"reserved"`
+	Reserved  bool `json:"reserved"`
 }
 
 type NvmeNamespaceSpace struct {
-        BlockSize *int                         `json:"blocksize,omitempty"`
+	BlockSize *int                         `json:"blocksize,omitempty"`
 	Guarantee *NvmeNamespaceSpaceGuarantee `json:"guarantee,omitempty"`
-	Size *int64                            `json:"size,omitempty"`
-	Used *int64                            `json:"used,omitempty"`
+	Size      *int64                       `json:"size,omitempty"`
+	Used      *int64                       `json:"used,omitempty"`
 }
 
 type NvmeNamespace struct {
 	Resource
-	AutoDelete *bool                            `json:"auto_delete,omitempty"`
-	Comment string                              `json:"comment,omitempty"`
-	CreateTime string                           `json:"create_time,omitempty"`
-	Enabled *bool                               `json:"enabled,omitempty"`
-	Location *NvmeNamespaceLocation             `json:"location,omitempty"`
-	Metric *struct {
+	AutoDelete *bool                  `json:"auto_delete,omitempty"`
+	Comment    string                 `json:"comment,omitempty"`
+	CreateTime string                 `json:"create_time,omitempty"`
+	Enabled    *bool                  `json:"enabled,omitempty"`
+	Location   *NvmeNamespaceLocation `json:"location,omitempty"`
+	Metric     *struct {
 		Resource
-		Duration string                     `json:"duration,omitempty"`
-		Iops *struct {
-			Other int                   `json:"other"`
-			Read int                    `json:"read"`
-			Total int                   `json:"total"`
-			Write int                   `json:"write"`
-		}                                   `json:"iops,omitempty"`
+		Duration string `json:"duration,omitempty"`
+		Iops     *struct {
+			Other int `json:"other"`
+			Read  int `json:"read"`
+			Total int `json:"total"`
+			Write int `json:"write"`
+		} `json:"iops,omitempty"`
 		Latency *struct {
-			Other int                   `json:"other"`
-			Read int                    `json:"read"`
-			Total int                   `json:"total"`
-			Write int                   `json:"write"`
-		}                                   `json:"latency,omitempty"`
-		Status string                       `json:"status,omitempty"`
+			Other int `json:"other"`
+			Read  int `json:"read"`
+			Total int `json:"total"`
+			Write int `json:"write"`
+		} `json:"latency,omitempty"`
+		Status     string `json:"status,omitempty"`
 		Throughput *struct {
-			Other int                   `json:"other"`
-			Read int                    `json:"read"`
-			Total int                   `json:"total"`
-			Write int                   `json:"write"`
-		}                                   `json:"throughput,omitempty"`
-		Timestamp string                    `json:"timestamp,omitempty"`
-	}                                           `json:"metric,omitempty"`
-	Name string                                 `json:"name,omitempty"`
-	OsType string                               `json:"os_type,omitempty"`
-	Space *NvmeNamespaceSpace                   `json:"space,omitempty"`
+			Other int `json:"other"`
+			Read  int `json:"read"`
+			Total int `json:"total"`
+			Write int `json:"write"`
+		} `json:"throughput,omitempty"`
+		Timestamp string `json:"timestamp,omitempty"`
+	} `json:"metric,omitempty"`
+	Name       string              `json:"name,omitempty"`
+	OsType     string              `json:"os_type,omitempty"`
+	Space      *NvmeNamespaceSpace `json:"space,omitempty"`
 	Statistics *struct {
 		IopsRaw *struct {
-			Other int                   `json:"other"`
-			Read int                    `json:"read"`
-			Total int                   `json:"total"`
-			Write int                   `json:"write"`
-		}                                   `json:"iops_raw,omitempty"`
+			Other int `json:"other"`
+			Read  int `json:"read"`
+			Total int `json:"total"`
+			Write int `json:"write"`
+		} `json:"iops_raw,omitempty"`
 		LatencyRaw *struct {
-			Other int                   `json:"other"`
-			Read int                    `json:"read"`
-			Total int                   `json:"total"`
-			Write int                   `json:"write"`
-		}                                   `json:"latency_raw,omitempty"`
-		Status string                       `json:"status,omitempty"`
+			Other int `json:"other"`
+			Read  int `json:"read"`
+			Total int `json:"total"`
+			Write int `json:"write"`
+		} `json:"latency_raw,omitempty"`
+		Status        string `json:"status,omitempty"`
 		ThroughputRaw *struct {
-			Other int                   `json:"other"`
-			Read int                    `json:"read"`
-			Total int                   `json:"total"`
-			Write int                   `json:"write"`
-		}                                   `json:"throughput_raw,omitempty"`
-		Timestamp string                    `json:"timestamp,omitempty"`
-	}                                           `json:"statistics,omitempty"`
+			Other int `json:"other"`
+			Read  int `json:"read"`
+			Total int `json:"total"`
+			Write int `json:"write"`
+		} `json:"throughput_raw,omitempty"`
+		Timestamp string `json:"timestamp,omitempty"`
+	} `json:"statistics,omitempty"`
 	Status *struct {
-		ContainerState string               `json:"container_state,omitempty"`
-		Mapped bool                         `json:"mapped"`
-		ReadOnly bool                       `json:"read_only"`
-		State string                        `json:"state,omitempty"`
-	}                                           `json:"status,omitempty"`
-	SubsystemMap *NvmeSubsystemMap              `json:"subsystem_map,omitempty"`
-	Svm *Resource                               `json:"svm,omitempty"`
-	Uuid string                                 `json:"uuid,omitempty"`
+		ContainerState string `json:"container_state,omitempty"`
+		Mapped         bool   `json:"mapped"`
+		ReadOnly       bool   `json:"read_only"`
+		State          string `json:"state,omitempty"`
+	} `json:"status,omitempty"`
+	SubsystemMap *NvmeSubsystemMap `json:"subsystem_map,omitempty"`
+	Svm          *Resource         `json:"svm,omitempty"`
+	Uuid         string            `json:"uuid,omitempty"`
 }
 
 type NvmeNamespaceResponse struct {
@@ -97,16 +97,16 @@ type NvmeNamespaceResponse struct {
 }
 
 type NvmeHostIoQueue struct {
-        Count int `json:"count,omitempty"`
-        Depth int `json:"depth,omitempty"`
+	Count int `json:"count,omitempty"`
+	Depth int `json:"depth,omitempty"`
 }
 
 type NvmeHost struct {
 	Resource
-        DhHmacChap *DhHmacChapProtocol `json:"dh_hmac_chap,omitempty"`
-	IoQueue *NvmeHostIoQueue       `json:"io_queue,omitempty"`
-        Nqn string                     `json:"nqn,omitempty"`
-        Subsystem *Resource            `json:"subsystem,omitempty"`
+	DhHmacChap *DhHmacChapProtocol `json:"dh_hmac_chap,omitempty"`
+	IoQueue    *NvmeHostIoQueue    `json:"io_queue,omitempty"`
+	Nqn        string              `json:"nqn,omitempty"`
+	Subsystem  *Resource           `json:"subsystem,omitempty"`
 }
 
 type NvmeHostResponse struct {
@@ -115,16 +115,16 @@ type NvmeHostResponse struct {
 }
 
 type NvmeSubsystemIoQueue struct {
-        Default *NvmeHostIoQueue `json:"default,omitempty"`
+	Default *NvmeHostIoQueue `json:"default,omitempty"`
 }
 
 type NvmeSubsystemMap struct {
-        Resource
-	Anagrpid string     `json:"anagrpid,omitempty"`
+	Resource
+	Anagrpid  string    `json:"anagrpid,omitempty"`
 	Namespace *Resource `json:"namespace,omitempty"`
-	Nsid string         `json:"nsid,omitempty"`
+	Nsid      string    `json:"nsid,omitempty"`
 	Subsystem *Resource `json:"subsystem,omitempty"`
-	Svm *Resource       `json:"svm,omitempty"`
+	Svm       *Resource `json:"svm,omitempty"`
 }
 
 type NvmeSubsystemMapResponse struct {
@@ -134,18 +134,18 @@ type NvmeSubsystemMapResponse struct {
 
 type NvmeSubsystem struct {
 	Resource
-	Comment string                              `json:"comment,omitempty"`
-	DeleteOnUnmap *bool                         `json:"delete_on_unmap,omitempty"`
-	Hosts []NvmeHost                            `json:"hosts,omitempty"`
-	IoQueue *NvmeSubsystemIoQueue               `json:"io_queue,omitempty"`
-	Name string                                 `json:"name,omitempty"`
-	OsType string                               `json:"os_type,omitempty"`
-	SerialNumber string                         `json:"serial_number,omitempty"`
-	SubsystemMaps []NvmeSubsystemMap            `json:"subsystem_maps,omitempty"`
-	Svm *Resource                               `json:"svm,omitempty"`
-	TargetNqn string                            `json:"target_nqn,omitempty"`
-	Uuid string                                 `json:"uuid,omitempty"`
-	VendorUuids []string                        `json:"vendor_uuids,omitempty"`
+	Comment       string                `json:"comment,omitempty"`
+	DeleteOnUnmap *bool                 `json:"delete_on_unmap,omitempty"`
+	Hosts         []NvmeHost            `json:"hosts,omitempty"`
+	IoQueue       *NvmeSubsystemIoQueue `json:"io_queue,omitempty"`
+	Name          string                `json:"name,omitempty"`
+	OsType        string                `json:"os_type,omitempty"`
+	SerialNumber  string                `json:"serial_number,omitempty"`
+	SubsystemMaps []NvmeSubsystemMap    `json:"subsystem_maps,omitempty"`
+	Svm           *Resource             `json:"svm,omitempty"`
+	TargetNqn     string                `json:"target_nqn,omitempty"`
+	Uuid          string                `json:"uuid,omitempty"`
+	VendorUuids   []string              `json:"vendor_uuids,omitempty"`
 }
 
 type NvmeSubsystemResponse struct {
@@ -155,39 +155,39 @@ type NvmeSubsystemResponse struct {
 
 type NvmeInterface struct {
 	Resource
-	Enabled *bool                               `json:"enabled,omitempty"`
+	Enabled     *bool `json:"enabled,omitempty"`
 	FcInterface *struct {
-	        Resource
-	        Port *struct {
-	                Resource
-	                Node *struct {
-	                        Name string         `json:"name,omitempty"`
-	                }                           `json:"node,omitempty"`
-		}                                   `json:"port,omitempty"`
-		Wwnn string                         `json:"wwnn,omitempty"`
-		Wwpn string                         `json:"wwpn,omitempty"`
-	}                                           `json:"fc_interface,omitempty"`
-	InterfaceType string                        `json:"interface_type,omitempty"`
-	IpInterface *struct {
-	        Resource
-	        Ip *struct {
-	                Address string              `json:"address,omitempty"`
-	        }                                   `json:"ip,omitempty"`
-	        Location *struct {
-	                Port *struct {
-	                        Resource
-	                        Node *struct {
-	                                Name string `json:"name,omitempty"`
-	                        }                   `json:"node,omitempty"`
-		        }                           `json:"port,omitempty"`
-		}                                   `json:"location,omitempty"`
-	}                                           `json:"ip_interface,omitempty"`
-	Name string                                 `json:"name,omitempty"`
-	Node *Resource                              `json:"node,omitempty"`
-	Svm *Resource                               `json:"svm,omitempty"`
-	TransportAddress string                     `json:"transport_address,omitempty"`
-	TransportProtocols []string                 `json:"transport_protocols,omitempty"`
-	Uuid string                                 `json:"uuid,omitempty"`
+		Resource
+		Port *struct {
+			Resource
+			Node *struct {
+				Name string `json:"name,omitempty"`
+			} `json:"node,omitempty"`
+		} `json:"port,omitempty"`
+		Wwnn string `json:"wwnn,omitempty"`
+		Wwpn string `json:"wwpn,omitempty"`
+	} `json:"fc_interface,omitempty"`
+	InterfaceType string `json:"interface_type,omitempty"`
+	IpInterface   *struct {
+		Resource
+		Ip *struct {
+			Address string `json:"address,omitempty"`
+		} `json:"ip,omitempty"`
+		Location *struct {
+			Port *struct {
+				Resource
+				Node *struct {
+					Name string `json:"name,omitempty"`
+				} `json:"node,omitempty"`
+			} `json:"port,omitempty"`
+		} `json:"location,omitempty"`
+	} `json:"ip_interface,omitempty"`
+	Name               string    `json:"name,omitempty"`
+	Node               *Resource `json:"node,omitempty"`
+	Svm                *Resource `json:"svm,omitempty"`
+	TransportAddress   string    `json:"transport_address,omitempty"`
+	TransportProtocols []string  `json:"transport_protocols,omitempty"`
+	Uuid               string    `json:"uuid,omitempty"`
 }
 
 type NvmeInterfaceResponse struct {
@@ -236,19 +236,19 @@ func (c *Client) NvmeNamespaceGet(href string, parameters []string) (*NvmeNamesp
 }
 
 func (c *Client) NvmeNamespaceGetByPath(svmName string, namespacePath string, parameters []string) (namespace *NvmeNamespace, res *RestResponse, err error) {
-        var namespaces []NvmeNamespace
+	var namespaces []NvmeNamespace
 	var req *http.Request
-	if namespaces, _, err = c.NvmeNamespaceGetIter([]string{"svm.name=" + svmName,"name=" + namespacePath}); err != nil {
-	        return
+	if namespaces, _, err = c.NvmeNamespaceGetIter([]string{"svm.name=" + svmName, "name=" + namespacePath}); err != nil {
+		return
 	}
 	if len(namespaces) > 0 {
-	        namespace = &NvmeNamespace{}
-	        if req, err = c.NewRequest("GET", namespaces[0].GetRef(), parameters, nil); err != nil {
-		        return
-	        }
-	        res, err = c.Do(req, namespace)
+		namespace = &NvmeNamespace{}
+		if req, err = c.NewRequest("GET", namespaces[0].GetRef(), parameters, nil); err != nil {
+			return
+		}
+		res, err = c.Do(req, namespace)
 	} else {
-	        err = fmt.Errorf("no NVME namespace \"%s\" found", namespacePath)
+		err = fmt.Errorf("no NVME namespace \"%s\" found", namespacePath)
 	}
 	return
 }
@@ -261,7 +261,7 @@ func (c *Client) NvmeNamespaceCreate(namespace *NvmeNamespace, parameters []stri
 	}
 	r := NvmeNamespaceResponse{}
 	if res, err = c.Do(req, &r); err == nil {
-	        namespaces = r.NvmeNamespaces
+		namespaces = r.NvmeNamespaces
 	}
 	return
 }
@@ -325,15 +325,15 @@ func (c *Client) NvmeSubsystemGet(href string, parameters []string) (*NvmeSubsys
 }
 
 func (c *Client) NvmeSubsystemGetByPath(svmName string, namespacePath string) (subsystemHref string, res *RestResponse, err error) {
-        var namespaces []NvmeNamespace
-	if namespaces, res, err = c.NvmeNamespaceGetIter([]string{"svm.name=" + svmName,"name=" + namespacePath,"fields=subsystem_map"}); err == nil {
-	        if len(namespaces) > 0 {
-	                if namespaces[0].SubsystemMap != nil {
-	                        subsystemHref = namespaces[0].SubsystemMap.Subsystem.GetRef()
-	                }
-	        } else {
-	                err = fmt.Errorf("no NVME namespace \"%s\" found", namespacePath)
-	        }
+	var namespaces []NvmeNamespace
+	if namespaces, res, err = c.NvmeNamespaceGetIter([]string{"svm.name=" + svmName, "name=" + namespacePath, "fields=subsystem_map"}); err == nil {
+		if len(namespaces) > 0 {
+			if namespaces[0].SubsystemMap != nil {
+				subsystemHref = namespaces[0].SubsystemMap.Subsystem.GetRef()
+			}
+		} else {
+			err = fmt.Errorf("no NVME namespace \"%s\" found", namespacePath)
+		}
 	}
 	return
 }
@@ -346,7 +346,7 @@ func (c *Client) NvmeSubsystemCreate(subsystem *NvmeSubsystem, parameters []stri
 	}
 	r := NvmeSubsystemResponse{}
 	if res, err = c.Do(req, &r); err == nil {
-	        subsystems = r.NvmeSubsystems
+		subsystems = r.NvmeSubsystems
 	}
 	return
 }
@@ -404,7 +404,7 @@ func (c *Client) NvmeHostCreate(subsystemHref string, host *NvmeHost, parameters
 	}
 	r := NvmeHostResponse{}
 	if res, err = c.Do(req, &r); err == nil {
-	        hosts = r.NvmeHosts
+		hosts = r.NvmeHosts
 	}
 	return
 }
@@ -447,15 +447,15 @@ func (c *Client) NvmeSubsystemMapGetIter(parameters []string) (subsystemMaps []N
 }
 
 func (c *Client) NvmeSubsystemMapGetByPath(svmName string, namespacePath string) (subsystemMapHref string, res *RestResponse, err error) {
-        var namespaces []NvmeNamespace
-	if namespaces, res, err = c.NvmeNamespaceGetIter([]string{"svm.name=" + svmName,"name=" + namespacePath,"fields=subsystem_map"}); err == nil {
-	        if len(namespaces) > 0 {
-	                if namespaces[0].SubsystemMap != nil {
-	                        subsystemMapHref = namespaces[0].SubsystemMap.GetRef()
-	                }
-	        } else {
-	                err = fmt.Errorf("no NVME namespace \"%s\" found", namespacePath)
-	        }
+	var namespaces []NvmeNamespace
+	if namespaces, res, err = c.NvmeNamespaceGetIter([]string{"svm.name=" + svmName, "name=" + namespacePath, "fields=subsystem_map"}); err == nil {
+		if len(namespaces) > 0 {
+			if namespaces[0].SubsystemMap != nil {
+				subsystemMapHref = namespaces[0].SubsystemMap.GetRef()
+			}
+		} else {
+			err = fmt.Errorf("no NVME namespace \"%s\" found", namespacePath)
+		}
 	}
 	return
 }
@@ -468,7 +468,7 @@ func (c *Client) NvmeSubsystemMapCreate(subsystemMap *NvmeSubsystemMap, paramete
 	}
 	r := NvmeSubsystemMapResponse{}
 	if res, err = c.Do(req, &r); err == nil {
-	        subsystemMaps = r.NvmeSubsystemMaps
+		subsystemMaps = r.NvmeSubsystemMaps
 	}
 	return
 }

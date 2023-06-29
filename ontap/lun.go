@@ -2,17 +2,17 @@ package ontap
 
 import (
 	"fmt"
-	"net/http"
 	"io"
-        "mime"
-        "mime/multipart"
+	"mime"
+	"mime/multipart"
+	"net/http"
 )
 
 const (
-        LUN_SIZE_BASE = 1048576
-        LUN_SIZE_OVERHEAD = 1048576
-        LUN_RESIZE_STEP = 1048576 * 128
-        LUN_STREAM_BYTES_MAX = 1048576
+	LUN_SIZE_BASE        = 1048576
+	LUN_SIZE_OVERHEAD    = 1048576
+	LUN_RESIZE_STEP      = 1048576 * 128
+	LUN_STREAM_BYTES_MAX = 1048576
 )
 
 type QtreeResource struct {
@@ -21,8 +21,8 @@ type QtreeResource struct {
 }
 
 type LunPaths struct {
-        Destination string `json:"destination,omitempty"`
-        Source string      `json:"source,omitempty"`
+	Destination string `json:"destination,omitempty"`
+	Source      string `json:"source,omitempty"`
 }
 
 type LunClone struct {
@@ -34,97 +34,97 @@ type LunCopy struct {
 }
 
 type LunMovement struct {
-        MaxThroughput string `json:"max_throughput,omitempty"`
-        Paths LunPaths       `json:"paths,omitempty"`
+	MaxThroughput string   `json:"max_throughput,omitempty"`
+	Paths         LunPaths `json:"paths,omitempty"`
 }
 
 type LunLocation struct {
-	LogicalUnit string   `json:"logical_unit,omitempty"`
-	Node *Resource       `json:"node,omitempty"`
-	Qtree *QtreeResource `json:"qtree,omitempty"`
-	Volume *Resource     `json:"volume,omitempty"`
+	LogicalUnit string         `json:"logical_unit,omitempty"`
+	Node        *Resource      `json:"node,omitempty"`
+	Qtree       *QtreeResource `json:"qtree,omitempty"`
+	Volume      *Resource      `json:"volume,omitempty"`
 }
 
 type LunSpaceGuarantee struct {
 	Requested bool `json:"requested"`
-	Reserved bool  `json:"reserved"`
+	Reserved  bool `json:"reserved"`
 }
 
 type LunSpace struct {
 	Guarantee *LunSpaceGuarantee `json:"guarantee,omitempty"`
-	Size *int64 `json:"size,omitempty"`
-	Used *int64 `json:"used,omitempty"`
+	Size      *int64             `json:"size,omitempty"`
+	Used      *int64             `json:"used,omitempty"`
 }
 
 type Lun struct {
 	Resource
-	AutoDelete *bool                            `json:"auto_delete,omitempty"`
-	Class string                                `json:"class,omitempty"`
-	Clone *LunClone                             `json:"clone,omitempty"`
-	Copy *LunCopy                               `json:"copy,omitempty"`
-	Movement *LunMovement                       `json:"movement,omitempty"`
-	Comment string                              `json:"comment,omitempty"`
-	CreateTime string                           `json:"create_time,omitempty"`
-	Enabled *bool                               `json:"enabled,omitempty"`
-	Location *LunLocation                       `json:"location,omitempty"`
-	Metric *struct {
+	AutoDelete *bool        `json:"auto_delete,omitempty"`
+	Class      string       `json:"class,omitempty"`
+	Clone      *LunClone    `json:"clone,omitempty"`
+	Copy       *LunCopy     `json:"copy,omitempty"`
+	Movement   *LunMovement `json:"movement,omitempty"`
+	Comment    string       `json:"comment,omitempty"`
+	CreateTime string       `json:"create_time,omitempty"`
+	Enabled    *bool        `json:"enabled,omitempty"`
+	Location   *LunLocation `json:"location,omitempty"`
+	Metric     *struct {
 		Resource
-		Duration string                     `json:"duration,omitempty"`
-		Iops *struct {
-			Other int                   `json:"other"`
-			Read int                    `json:"read"`
-			Total int                   `json:"total"`
-			Write int                   `json:"write"`
-		}                                   `json:"iops,omitempty"`
+		Duration string `json:"duration,omitempty"`
+		Iops     *struct {
+			Other int `json:"other"`
+			Read  int `json:"read"`
+			Total int `json:"total"`
+			Write int `json:"write"`
+		} `json:"iops,omitempty"`
 		Latency *struct {
-			Other int                   `json:"other"`
-			Read int                    `json:"read"`
-			Total int                   `json:"total"`
-			Write int                   `json:"write"`
-		}                                   `json:"latency,omitempty"`
-		Status string                       `json:"status,omitempty"`
+			Other int `json:"other"`
+			Read  int `json:"read"`
+			Total int `json:"total"`
+			Write int `json:"write"`
+		} `json:"latency,omitempty"`
+		Status     string `json:"status,omitempty"`
 		Throughput *struct {
-			Other int                   `json:"other"`
-			Read int                    `json:"read"`
-			Total int                   `json:"total"`
-			Write int                   `json:"write"`
-		}                                   `json:"throughput,omitempty"`
-		Timestamp string                    `json:"timestamp,omitempty"`
-	}                                           `json:"metric,omitempty"`
-	Name string                                 `json:"name,omitempty"`
-	OsType string                               `json:"os_type,omitempty"`
-	QosPolicy *Resource                         `json:"qos_policy,omitempty"`
-	SerialNumber string                         `json:"serial_number,omitempty"`
-	Space *LunSpace                             `json:"space,omitempty"`
-	Statistics *struct {
+			Other int `json:"other"`
+			Read  int `json:"read"`
+			Total int `json:"total"`
+			Write int `json:"write"`
+		} `json:"throughput,omitempty"`
+		Timestamp string `json:"timestamp,omitempty"`
+	} `json:"metric,omitempty"`
+	Name         string    `json:"name,omitempty"`
+	OsType       string    `json:"os_type,omitempty"`
+	QosPolicy    *Resource `json:"qos_policy,omitempty"`
+	SerialNumber string    `json:"serial_number,omitempty"`
+	Space        *LunSpace `json:"space,omitempty"`
+	Statistics   *struct {
 		IopsRaw *struct {
-			Other int                   `json:"other"`
-			Read int                    `json:"read"`
-			Total int                   `json:"total"`
-			Write int                   `json:"write"`
-		}                                   `json:"iops_raw,omitempty"`
+			Other int `json:"other"`
+			Read  int `json:"read"`
+			Total int `json:"total"`
+			Write int `json:"write"`
+		} `json:"iops_raw,omitempty"`
 		LatencyRaw *struct {
-			Other int                   `json:"other"`
-			Read int                    `json:"read"`
-			Total int                   `json:"total"`
-			Write int                   `json:"write"`
-		}                                   `json:"latency_raw,omitempty"`
-		Status string                       `json:"status,omitempty"`
+			Other int `json:"other"`
+			Read  int `json:"read"`
+			Total int `json:"total"`
+			Write int `json:"write"`
+		} `json:"latency_raw,omitempty"`
+		Status        string `json:"status,omitempty"`
 		ThroughputRaw *struct {
-			Other int                   `json:"other"`
-			Read int                    `json:"read"`
-			Total int                   `json:"total"`
-			Write int                   `json:"write"`
-		}                                   `json:"throughput_raw,omitempty"`
-		Timestamp string                    `json:"timestamp,omitempty"`
-	}                                           `json:"statistics,omitempty"`
+			Other int `json:"other"`
+			Read  int `json:"read"`
+			Total int `json:"total"`
+			Write int `json:"write"`
+		} `json:"throughput_raw,omitempty"`
+		Timestamp string `json:"timestamp,omitempty"`
+	} `json:"statistics,omitempty"`
 	Status *struct {
-		ContainerState string               `json:"container_state,omitempty"`
-		Mapped bool                         `json:"mapped"`
-		ReadOnly bool                       `json:"read_only"`
-		State string                        `json:"state,omitempty"`
-	}                                           `json:"status,omitempty"`
-	Svm *Resource                               `json:"svm,omitempty"`
+		ContainerState string `json:"container_state,omitempty"`
+		Mapped         bool   `json:"mapped"`
+		ReadOnly       bool   `json:"read_only"`
+		State          string `json:"state,omitempty"`
+	} `json:"status,omitempty"`
+	Svm *Resource `json:"svm,omitempty"`
 }
 
 type LunResponse struct {
@@ -140,8 +140,8 @@ type LunRef struct {
 type IgroupRef struct {
 	Resource
 	Initiators []string `json:"initiators,omitempty"`
-	OsType string       `json:"os_type,omitempty"`
-	Protocol string     `json:"protocol,omitempty"`
+	OsType     string   `json:"os_type,omitempty"`
+	Protocol   string   `json:"protocol,omitempty"`
 }
 
 type LunMapResponse struct {
@@ -151,10 +151,10 @@ type LunMapResponse struct {
 
 type LunMap struct {
 	Resource
-	Igroup *IgroupRef      `json:"igroup,omitempty"`
-	LogicalUnitNumber *int `json:"logical_unit_number,omitempty"`
-	Lun *LunRef            `json:"lun,omitempty"`
-	Svm *Resource          `json:"svm,omitempty"`
+	Igroup            *IgroupRef `json:"igroup,omitempty"`
+	LogicalUnitNumber *int       `json:"logical_unit_number,omitempty"`
+	Lun               *LunRef    `json:"lun,omitempty"`
+	Svm               *Resource  `json:"svm,omitempty"`
 }
 
 func (c *Client) LunGetIter(parameters []string) (luns []Lun, res *RestResponse, err error) {
@@ -198,19 +198,19 @@ func (c *Client) LunGet(href string, parameters []string) (*Lun, *RestResponse, 
 }
 
 func (c *Client) LunGetByPath(lunPath string, parameters []string) (lun *Lun, res *RestResponse, err error) {
-        var luns []Lun
+	var luns []Lun
 	var req *http.Request
 	if luns, _, err = c.LunGetIter([]string{"name=" + lunPath}); err != nil {
-	        return
+		return
 	}
 	if len(luns) > 0 {
-	        lun = &Lun{}
-	        if req, err = c.NewRequest("GET", luns[0].GetRef(), parameters, nil); err != nil {
-		        return
-	        }
-	        res, err = c.Do(req, lun)
+		lun = &Lun{}
+		if req, err = c.NewRequest("GET", luns[0].GetRef(), parameters, nil); err != nil {
+			return
+		}
+		res, err = c.Do(req, lun)
 	} else {
-	        err = fmt.Errorf("no LUN \"%s\" found", lunPath)
+		err = fmt.Errorf("no LUN \"%s\" found", lunPath)
 	}
 	return
 }
@@ -223,7 +223,7 @@ func (c *Client) LunCreate(lun *Lun, parameters []string) (luns []Lun, res *Rest
 	}
 	r := LunResponse{}
 	if res, err = c.Do(req, &r); err == nil {
-	        luns = r.Luns
+		luns = r.Luns
 	}
 	return
 }
@@ -310,45 +310,45 @@ func (c *Client) LunRead(href string, dataOffset int64, dataSize int64) (data []
 	var req *http.Request
 	data = make([]byte, dataSize)
 	var bytesReadMax int64
-        for {
-                if (dataSize - bytesRead) > LUN_STREAM_BYTES_MAX {
-                        bytesReadMax = LUN_STREAM_BYTES_MAX
-                } else {
-                        bytesReadMax = dataSize - bytesRead
-                }
-	        parameters := []string{fmt.Sprintf("data.offset=%d", dataOffset + bytesRead), fmt.Sprintf("data.size=%d", bytesReadMax)}
-	        if req, err = c.NewRequest("GET", href, parameters, nil); err != nil {
-		        return
-	        }
-	        req.Header.Set("Accept", "multipart/form-data")
-	        if res, err = c.Do(req, nil); err != nil {
-		        return
-	        }
-	        var headerParameters map[string]string
-	        if _, headerParameters, err = mime.ParseMediaType(res.HttpResponse.Header.Get("Content-Type")); err != nil {
-		        return
-	        }
-	        var mpartReader *multipart.Reader
-	        if boundary, ok := headerParameters["boundary"]; ok {
-		        mpartReader = multipart.NewReader(res.HttpResponse.Body, boundary)
-	        } else {
-		        err = fmt.Errorf("LunRead(): expected response in Mime format")
-		        return
-	        }
-	        var p *multipart.Part
-	        if p, err = mpartReader.NextPart(); err == nil {
-	                n, readErr := p.Read(data[bytesRead:])
-	                if readErr != nil {
-                                if readErr != io.EOF {
-		                        err = fmt.Errorf("LunRead(): mpart read error: %s", readErr)
-		                        break
-		                }
-		        }
-		        bytesRead += int64(n)
-                        if bytesRead >= dataSize {
-                                break
-                        }
-	        }
+	for {
+		if (dataSize - bytesRead) > LUN_STREAM_BYTES_MAX {
+			bytesReadMax = LUN_STREAM_BYTES_MAX
+		} else {
+			bytesReadMax = dataSize - bytesRead
+		}
+		parameters := []string{fmt.Sprintf("data.offset=%d", dataOffset+bytesRead), fmt.Sprintf("data.size=%d", bytesReadMax)}
+		if req, err = c.NewRequest("GET", href, parameters, nil); err != nil {
+			return
+		}
+		req.Header.Set("Accept", "multipart/form-data")
+		if res, err = c.Do(req, nil); err != nil {
+			return
+		}
+		var headerParameters map[string]string
+		if _, headerParameters, err = mime.ParseMediaType(res.HttpResponse.Header.Get("Content-Type")); err != nil {
+			return
+		}
+		var mpartReader *multipart.Reader
+		if boundary, ok := headerParameters["boundary"]; ok {
+			mpartReader = multipart.NewReader(res.HttpResponse.Body, boundary)
+		} else {
+			err = fmt.Errorf("LunRead(): expected response in Mime format")
+			return
+		}
+		var p *multipart.Part
+		if p, err = mpartReader.NextPart(); err == nil {
+			n, readErr := p.Read(data[bytesRead:])
+			if readErr != nil {
+				if readErr != io.EOF {
+					err = fmt.Errorf("LunRead(): mpart read error: %s", readErr)
+					break
+				}
+			}
+			bytesRead += int64(n)
+			if bytesRead >= dataSize {
+				break
+			}
+		}
 	}
 	return
 }
@@ -359,40 +359,40 @@ func (c *Client) LunWrite(href string, dataOffset int64, dataReader io.Reader) (
 	var lun *Lun
 	writeBuffer := make([]byte, LUN_STREAM_BYTES_MAX)
 	if lun, _, err = c.LunGet(href, []string{"fields=space"}); err != nil {
-	        return
+		return
 	}
 	for {
-	        n, readErr := dataReader.Read(writeBuffer)
-                if n > 0 {
-                        // Resizing LUN if necessary
-                        if (bytesWritten + int64(n)) > (*lun.Space.Size - int64(LUN_SIZE_BASE + LUN_SIZE_OVERHEAD)) {
-                                lunSizeBytes := *lun.Space.Size + int64(LUN_RESIZE_STEP)
-                                lunReq := Lun{
-                                        Space: &LunSpace{
-                                                Size: &lunSizeBytes,
-                                        },
-                                }
-                                if _, err = c.LunModify(href, &lunReq); err != nil {
-                                        return
-                                }
-	                        if lun, _, err = c.LunGet(href, []string{"fields=space"}); err != nil {
-	                                return
-	                        }
-                        }
-	                parameters = []string{fmt.Sprintf("data.offset=%d", dataOffset + bytesWritten)}
-	                if req, err = c.NewFormFileRequest("PATCH", href, parameters, writeBuffer[0:n]); err != nil {
-		                return
-	                }
-	                if res, err = c.Do(req, nil); err == nil {
-		                bytesWritten += int64(n)
-		        }
+		n, readErr := dataReader.Read(writeBuffer)
+		if n > 0 {
+			// Resizing LUN if necessary
+			if (bytesWritten + int64(n)) > (*lun.Space.Size - int64(LUN_SIZE_BASE+LUN_SIZE_OVERHEAD)) {
+				lunSizeBytes := *lun.Space.Size + int64(LUN_RESIZE_STEP)
+				lunReq := Lun{
+					Space: &LunSpace{
+						Size: &lunSizeBytes,
+					},
+				}
+				if _, err = c.LunModify(href, &lunReq); err != nil {
+					return
+				}
+				if lun, _, err = c.LunGet(href, []string{"fields=space"}); err != nil {
+					return
+				}
+			}
+			parameters = []string{fmt.Sprintf("data.offset=%d", dataOffset+bytesWritten)}
+			if req, err = c.NewFormFileRequest("PATCH", href, parameters, writeBuffer[0:n]); err != nil {
+				return
+			}
+			if res, err = c.Do(req, nil); err == nil {
+				bytesWritten += int64(n)
+			}
 		}
-                if readErr != nil {
-                        if readErr != io.EOF {
-                                err = readErr
-                        }
-                        break
-                }
+		if readErr != nil {
+			if readErr != io.EOF {
+				err = readErr
+			}
+			break
+		}
 	}
 	return
 }

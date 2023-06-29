@@ -1,7 +1,7 @@
 package util
 
 import (
-    "net"
+	"net"
 )
 
 func GetOutboundIP() (ip net.IP, err error) {

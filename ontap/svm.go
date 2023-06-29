@@ -6,17 +6,17 @@ import (
 
 type Aggregate struct {
 	Resource
-	AvailableSize int64 `json:"available_size"`
-	Type string         `json:"type"`
-	State string        `json:"state"`
-	SnaplockType string `json:"snaplock_type,omitempty"`
+	AvailableSize int64  `json:"available_size"`
+	Type          string `json:"type"`
+	State         string `json:"state"`
+	SnaplockType  string `json:"snaplock_type,omitempty"`
 }
 
 type AdDomain struct {
 	OrganizationalUnit string `json:"organizational_unit,omitempty"`
-	Fqdn string               `json:"fqdn,omitempty"`
-	Password string           `json:"password,omitempty"`
-	User string               `json:"user,omitempty"`
+	Fqdn               string `json:"fqdn,omitempty"`
+	Password           string `json:"password,omitempty"`
+	User               string `json:"user,omitempty"`
 }
 
 type Dns struct {
@@ -27,11 +27,11 @@ type Dns struct {
 
 type Ldap struct {
 	Resource
-	AdDomain string  `json:"ad_domain,omitempty"`
-	BaseDn string    `json:"base_dn,omitempty"`
-	BindDn string    `json:"bind_dn,omitempty"`
-	Servers []string `json:"servers,omitempty"`
-	Enabled bool     `json:"enabled"`
+	AdDomain string   `json:"ad_domain,omitempty"`
+	BaseDn   string   `json:"base_dn,omitempty"`
+	BindDn   string   `json:"bind_dn,omitempty"`
+	Servers  []string `json:"servers,omitempty"`
+	Enabled  bool     `json:"enabled"`
 }
 
 type Nfs struct {
@@ -56,25 +56,25 @@ type Nvme struct {
 
 type Cifs struct {
 	Resource
-	Name string       `json:"name"`
+	Name     string   `json:"name"`
 	AdDomain AdDomain `json:"ad_domain,omitempty"`
-	Enabled bool      `json:"enabled"`
+	Enabled  bool     `json:"enabled"`
 }
 
 type Nis struct {
 	Resource
-	Domain string    `json:"nis_domain,omitempty"`
+	Domain  string   `json:"nis_domain,omitempty"`
 	Servers []string `json:"nis_servers,omitempty"`
 	Enabled bool     `json:"enabled"`
 }
 
 type NsSwitch struct {
 	Resource
-	Group []string    `json:"group,omitempty"`
-	Hosts []string    `json:"hosts,omitempty"`
-	NameMap []string  `json:"namemap,omitempty"`
+	Group    []string `json:"group,omitempty"`
+	Hosts    []string `json:"hosts,omitempty"`
+	NameMap  []string `json:"namemap,omitempty"`
 	NetGroup []string `json:"netgroup,omitempty"`
-	Passwd []string   `json:"passwd,omitempty"`
+	Passwd   []string `json:"passwd,omitempty"`
 }
 
 type Ip struct {
@@ -91,11 +91,11 @@ type IpInfo struct {
 type IpInterfaceSvm struct {
 	Resource
 	Location struct {
-		HomeNode Resource        `json:"home_node,omitempty"`
+		HomeNode        Resource `json:"home_node,omitempty"`
 		BroadcastDomain Resource `json:"broadcast_domain,omitempty"`
-	}                                `json:"location,omitempty"`
-	Ip Ip                            `json:"ip,omitempty"`
-	Services []string                `json:"services,omitempty"`
+	} `json:"location,omitempty"`
+	Ip       Ip       `json:"ip,omitempty"`
+	Services []string `json:"services,omitempty"`
 }
 
 type FcPortReference struct {
@@ -105,56 +105,56 @@ type FcPortReference struct {
 
 type FcInterfaceSvm struct {
 	Resource
-	DataProtocol string              `json:"data_protocol,omitempty"`
-	Location struct {
-		port FcPortReference     `json:"port,omitempty"`
-	}                                `json:"location,omitempty"`
+	DataProtocol string `json:"data_protocol,omitempty"`
+	Location     struct {
+		port FcPortReference `json:"port,omitempty"`
+	} `json:"location,omitempty"`
 }
 
 type NetworkRoute struct {
-	Gateway string     `json:"gateway,omitempty"`
+	Gateway     string `json:"gateway,omitempty"`
 	Destination IpInfo `json:"destination,omitempty"`
 }
 
 type S3Service struct {
 	Resource
-	Certificate Resource `json:"certificate,omitempty"`
-	IsHttpEnabled bool   `json:"is_http_enabled"`
-	IsHttpsEnabled bool  `json:"is_https_enabled"`
-	Port int             `json:"port"`
-	SecurePort int       `json:"secure_port"`
-	Enabled bool         `json:"enabled"`
+	Certificate    Resource `json:"certificate,omitempty"`
+	IsHttpEnabled  bool     `json:"is_http_enabled"`
+	IsHttpsEnabled bool     `json:"is_https_enabled"`
+	Port           int      `json:"port"`
+	SecurePort     int      `json:"secure_port"`
+	Enabled        bool     `json:"enabled"`
 }
 
 type Svm struct {
 	Resource
-	Aggregates []Aggregate            `json:"aggregates,omitempty"`
-	AggregatesDelegated bool          `json:"aggregates_delegated"`
-	Certificate Resource              `json:"certificate,omitempty"`
-	Cifs Cifs                         `json:"cifs,omitempty"`
-	Comment string                    `json:"comment,omitempty"`
-	Dns Dns                           `json:"dns,omitempty"`
-	Fcp Fcp                           `json:"fcp,omitempty"`
-	FcInterfaces []FcInterfaceSvm     `json:"fc_interfaces,omitempty"`
-	IpInterfaces []IpInterfaceSvm     `json:"ip_interfaces,omitempty"`
-	IpSpace Resource                  `json:"ipspace,omitempty"`
-	Iscsi Iscsi                       `json:"iscsi,omitempty"`
-	Language string                   `json:"language,omitempty"`
-	Ldap Ldap                         `json:"ldap,omitempty"`
-	Nfs Nfs                           `json:"nfs,omitempty"`
-	Nis Nis                           `json:"nis,omitempty"`
-	NsSwitch NsSwitch                 `json:"nsswitch,omitempty"`
-	Nvme Nvme                         `json:"nvme,omitempty"`
-	Routes []NetworkRoute             `json:"routes,omitempty"`
-	S3 S3Service                      `json:"s3,omitempty"`
-	SnapMirror struct {
-		IsProtected bool          `json:"is_protected"`
-		ProtectedVolumesCount int `json:"protected_volumes_count"`
-	}                                 `json:"snapmirror"`
-	SnapshotPolicy Resource           `json:"snapshot_policy,omitempty"`
-	State string                      `json:"state,omitempty"`
-	Subtype string                    `json:"subtype,omitempty"`
-	VolumeEfficiencyPolicy Resource   `json:"volume_efficiency_policy,omitempty"`
+	Aggregates          []Aggregate      `json:"aggregates,omitempty"`
+	AggregatesDelegated bool             `json:"aggregates_delegated"`
+	Certificate         Resource         `json:"certificate,omitempty"`
+	Cifs                Cifs             `json:"cifs,omitempty"`
+	Comment             string           `json:"comment,omitempty"`
+	Dns                 Dns              `json:"dns,omitempty"`
+	Fcp                 Fcp              `json:"fcp,omitempty"`
+	FcInterfaces        []FcInterfaceSvm `json:"fc_interfaces,omitempty"`
+	IpInterfaces        []IpInterfaceSvm `json:"ip_interfaces,omitempty"`
+	IpSpace             Resource         `json:"ipspace,omitempty"`
+	Iscsi               Iscsi            `json:"iscsi,omitempty"`
+	Language            string           `json:"language,omitempty"`
+	Ldap                Ldap             `json:"ldap,omitempty"`
+	Nfs                 Nfs              `json:"nfs,omitempty"`
+	Nis                 Nis              `json:"nis,omitempty"`
+	NsSwitch            NsSwitch         `json:"nsswitch,omitempty"`
+	Nvme                Nvme             `json:"nvme,omitempty"`
+	Routes              []NetworkRoute   `json:"routes,omitempty"`
+	S3                  S3Service        `json:"s3,omitempty"`
+	SnapMirror          struct {
+		IsProtected           bool `json:"is_protected"`
+		ProtectedVolumesCount int  `json:"protected_volumes_count"`
+	} `json:"snapmirror"`
+	SnapshotPolicy         Resource `json:"snapshot_policy,omitempty"`
+	State                  string   `json:"state,omitempty"`
+	Subtype                string   `json:"subtype,omitempty"`
+	VolumeEfficiencyPolicy Resource `json:"volume_efficiency_policy,omitempty"`
 }
 
 type SvmResponse struct {

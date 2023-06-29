@@ -13,11 +13,11 @@ const (
 
 func LunCreateFromFile(c *ontap.Client, lunPath string, filePath string, osType string) (err error) {
 	lunRequest := ontap.LunCreateFromFileRequest{
-		LunPath: lunPath,
-		FilePath: filePath,
-		OsType: osType,
+		LunPath:         lunPath,
+		FilePath:        filePath,
+		OsType:          osType,
 		SpaceAllocation: "disabled",
-		SpaceReserve: "disabled",
+		SpaceReserve:    "disabled",
 	}
 	if _, err = c.PrivateCliLunCreateFromFile(&lunRequest); err != nil {
 		return
@@ -25,7 +25,7 @@ func LunCreateFromFile(c *ontap.Client, lunPath string, filePath string, osType 
 	giveupTime := time.Now().Add(time.Second * MAX_WAIT_FOR_LUN)
 	for time.Now().Before(giveupTime) {
 		var luns []ontap.Lun
-		if luns, _, err = c.LunGetIter([]string{"name=" + lunPath,"fields=status"}); err != nil {
+		if luns, _, err = c.LunGetIter([]string{"name=" + lunPath, "fields=status"}); err != nil {
 			break
 		}
 		if len(luns) > 0 && luns[0].Status.State == "online" {

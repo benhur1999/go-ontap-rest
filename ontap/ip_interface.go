@@ -6,51 +6,51 @@ import (
 
 type IpInterface struct {
 	Resource
-	Enabled bool                     `json:"enabled"`
-	Ip IpInfo                        `json:"ip,omitempty"`
-	IpSpace Resource                 `json:"ipspace,omitempty"`
+	Enabled  bool     `json:"enabled"`
+	Ip       IpInfo   `json:"ip,omitempty"`
+	IpSpace  Resource `json:"ipspace,omitempty"`
 	Location struct {
-		AutoRevert bool          `json:"auto_revert"`
+		AutoRevert      bool     `json:"auto_revert"`
 		BroadcastDomain Resource `json:"broadcast_domain,omitempty"`
-		Failover string          `json:"failover,omitempty"`
-		HomeNode Resource        `json:"home_node,omitempty"`
-		HomePort struct {
+		Failover        string   `json:"failover,omitempty"`
+		HomeNode        Resource `json:"home_node,omitempty"`
+		HomePort        struct {
 			Resource
-			Node Resource    `json:"node,omitempty"`
-		}                        `json:"home_port,omitempty"`
-		IsHome bool              `json:"is_home"`
-		Node Resource            `json:"node"`
-		Port struct {
+			Node Resource `json:"node,omitempty"`
+		} `json:"home_port,omitempty"`
+		IsHome bool     `json:"is_home"`
+		Node   Resource `json:"node"`
+		Port   struct {
 			Resource
-			Node Resource    `json:"node,omitempty"`
-		}                        `json:"port,omitempty"`
-	}                                `json:"location,omitempty"`
+			Node Resource `json:"node,omitempty"`
+		} `json:"port,omitempty"`
+	} `json:"location,omitempty"`
 	Metrics struct {
 		Resource
-		Duration string          `json:"duration,omitempty"`
-		Status string            `json:"status,omitempty"`
+		Duration   string `json:"duration,omitempty"`
+		Status     string `json:"status,omitempty"`
 		Throughput struct {
-			Read int         `json:"read"`
-			Total int        `json:"total"`
-			Write int        `json:"write"`
-		}                        `json:"throughput,omitempty"`
-		Timestamp string         `json:"timestamp,omitempty"`
-	}                                `json:"metrics,omitempty"`
-	Scope string                     `json:"scope,omitempty"`
-	ServicePolicy Resource           `json:"service_policy,omitempty"`
-	Services []string                `json:"services,omitempty"`
-	State string                     `json:"state,omitempty"`
-	Statistics struct {
-		Status string            `json:"status,omitempty"`
+			Read  int `json:"read"`
+			Total int `json:"total"`
+			Write int `json:"write"`
+		} `json:"throughput,omitempty"`
+		Timestamp string `json:"timestamp,omitempty"`
+	} `json:"metrics,omitempty"`
+	Scope         string   `json:"scope,omitempty"`
+	ServicePolicy Resource `json:"service_policy,omitempty"`
+	Services      []string `json:"services,omitempty"`
+	State         string   `json:"state,omitempty"`
+	Statistics    struct {
+		Status        string `json:"status,omitempty"`
 		ThroughputRaw struct {
-			Read int         `json:"read"`
-			Total int        `json:"total"`
-			Write int        `json:"write"`
-		}                        `json:"throughput,omitempty"`
-		Timestamp string         `json:"timestamp,omitempty"`
-	}                                `json:"statistics,omitempty"`
-	Svm Resource                     `json:"svm,omitempty"`
-	Vip bool                         `json:"vip"`
+			Read  int `json:"read"`
+			Total int `json:"total"`
+			Write int `json:"write"`
+		} `json:"throughput,omitempty"`
+		Timestamp string `json:"timestamp,omitempty"`
+	} `json:"statistics,omitempty"`
+	Svm Resource `json:"svm,omitempty"`
+	Vip bool     `json:"vip"`
 }
 
 type IpInterfaceResponse struct {

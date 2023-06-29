@@ -1,7 +1,7 @@
 package ontap
 
 import (
-        "net/http"
+	"net/http"
 )
 
 type ExportRuleClient struct {
@@ -10,13 +10,13 @@ type ExportRuleClient struct {
 
 type ExportPolicyRule struct {
 	Resource
-	AnonymousUser string       `json:"anonymous_user,omitempty"`
-	Clients []ExportRuleClient `json:"clients,omitempty"`
-	Index *int                 `json:"index,omitempty"`
-	Protocols []string         `json:"protocols,omitempty"`
-	RoRule []string            `json:"ro_rule,omitempty"`
-	RwRule []string            `json:"rw_rule,omitempty"`
-	Superuser []string         `json:"superuser,omitempty"`
+	AnonymousUser string             `json:"anonymous_user,omitempty"`
+	Clients       []ExportRuleClient `json:"clients,omitempty"`
+	Index         *int               `json:"index,omitempty"`
+	Protocols     []string           `json:"protocols,omitempty"`
+	RoRule        []string           `json:"ro_rule,omitempty"`
+	RwRule        []string           `json:"rw_rule,omitempty"`
+	Superuser     []string           `json:"superuser,omitempty"`
 }
 
 type ExportPolicyRuleResponse struct {
@@ -32,7 +32,7 @@ type ExportPolicyRef struct {
 type ExportPolicy struct {
 	ExportPolicyRef
 	Rules []ExportPolicyRule `json:"rules,omitempty"`
-	Svm *Resource            `json:"svm,omitempty"`
+	Svm   *Resource          `json:"svm,omitempty"`
 }
 
 type ExportPolicyResponse struct {
