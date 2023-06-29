@@ -85,9 +85,7 @@ func (c *Client) FileGetIter(volumeUuid string, path string, parameters []string
 		if err != nil {
 			return
 		}
-		for _, file := range r.Files {
-			files = append(files, file)
-		}
+		files = append(files, r.Files...)
 		if r.IsPaginate() {
 			getPath = r.GetNextRef()
 			reqParameters = []string{}

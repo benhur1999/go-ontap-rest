@@ -41,9 +41,7 @@ func (c *Client) JobGetIter(parameters []string) (jobs []Job, res *RestResponse,
 		if err != nil {
 			return
 		}
-		for _, job := range r.Jobs {
-			jobs = append(jobs, job)
-		}
+		jobs = append(jobs, r.Jobs...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}

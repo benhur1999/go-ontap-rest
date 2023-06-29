@@ -44,9 +44,7 @@ func (c *Client) IgroupGetIter(parameters []string) (igroups []Igroup, res *Rest
 		if err != nil {
 			return
 		}
-		for _, igroup := range r.Igroups {
-			igroups = append(igroups, igroup)
-		}
+		igroups = append(igroups, r.Igroups...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}
@@ -112,9 +110,7 @@ func (c *Client) IgroupInitiatorGetIter(href string, parameters []string) (initi
 		if err != nil {
 			return
 		}
-		for _, initiator := range r.IgroupInitiators {
-			initiators = append(initiators, initiator)
-		}
+		initiators = append(initiators, r.IgroupInitiators...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}

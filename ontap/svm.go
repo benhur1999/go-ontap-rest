@@ -176,9 +176,7 @@ func (c *Client) SvmGetIter(parameters []string) (svms []Svm, res *RestResponse,
 		if err != nil {
 			return
 		}
-		for _, svm := range r.Svms {
-			svms = append(svms, svm)
-		}
+		svms = append(svms, r.Svms...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}

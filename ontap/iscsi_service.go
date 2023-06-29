@@ -79,9 +79,7 @@ func (c *Client) IscsiServiceGetIter(parameters []string) (iscsiServices []Iscsi
 		if err != nil {
 			return
 		}
-		for _, iscsiService := range r.IscsiServices {
-			iscsiServices = append(iscsiServices, iscsiService)
-		}
+		iscsiServices = append(iscsiServices, r.IscsiServices...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}

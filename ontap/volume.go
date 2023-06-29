@@ -295,9 +295,7 @@ func (c *Client) VolumeGetIter(parameters []string) (volumes []Volume, res *Rest
 		if err != nil {
 			return
 		}
-		for _, volume := range r.Volumes {
-			volumes = append(volumes, volume)
-		}
+		volumes = append(volumes, r.Volumes...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}

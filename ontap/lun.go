@@ -171,9 +171,7 @@ func (c *Client) LunGetIter(parameters []string) (luns []Lun, res *RestResponse,
 		if err != nil {
 			return
 		}
-		for _, lun := range r.Luns {
-			luns = append(luns, lun)
-		}
+		luns = append(luns, r.Luns...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}
@@ -260,9 +258,7 @@ func (c *Client) LunMapGetIter(parameters []string) (lunMaps []LunMap, res *Rest
 		if err != nil {
 			return
 		}
-		for _, lunMap := range r.LunMaps {
-			lunMaps = append(lunMaps, lunMap)
-		}
+		lunMaps = append(lunMaps, r.LunMaps...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}

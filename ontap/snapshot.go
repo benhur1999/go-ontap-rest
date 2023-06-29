@@ -37,9 +37,7 @@ func (c *Client) SnapshotGetIter(volumeUuid string, parameters []string) (snapsh
 		if err != nil {
 			return
 		}
-		for _, snapshot := range r.Snapshots {
-			snapshots = append(snapshots, snapshot)
-		}
+		snapshots = append(snapshots, r.Snapshots...)
 		if r.IsPaginate() {
 			getPath = r.GetNextRef()
 			reqParameters = []string{}

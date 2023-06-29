@@ -54,9 +54,9 @@ func (c *Client) ExportPolicyGetIter(parameters []string) (expPolicies []ExportP
 		if err != nil {
 			return
 		}
-		for _, expPolicy := range r.ExportPolicies {
-			expPolicies = append(expPolicies, expPolicy)
-		}
+
+		expPolicies = append(expPolicies, r.ExportPolicies...)
+
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}
@@ -122,9 +122,7 @@ func (c *Client) ExportPolicyRuleGetIter(href string, parameters []string) (rule
 		if err != nil {
 			return
 		}
-		for _, rule := range r.ExportPolicyRules {
-			rules = append(rules, rule)
-		}
+		rules = append(rules, r.ExportPolicyRules...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}

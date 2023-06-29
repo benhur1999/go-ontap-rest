@@ -209,9 +209,7 @@ func (c *Client) NvmeNamespaceGetIter(parameters []string) (namespaces []NvmeNam
 		if err != nil {
 			return
 		}
-		for _, namespace := range r.NvmeNamespaces {
-			namespaces = append(namespaces, namespace)
-		}
+		namespaces = append(namespaces, r.NvmeNamespaces...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}
@@ -298,9 +296,7 @@ func (c *Client) NvmeSubsystemGetIter(parameters []string) (subsystems []NvmeSub
 		if err != nil {
 			return
 		}
-		for _, subsystem := range r.NvmeSubsystems {
-			subsystems = append(subsystems, subsystem)
-		}
+		subsystems = append(subsystems, r.NvmeSubsystems...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}
@@ -383,9 +379,7 @@ func (c *Client) NvmeHostGetIter(subsystemHref string, parameters []string) (hos
 		if err != nil {
 			return
 		}
-		for _, host := range r.NvmeHosts {
-			hosts = append(hosts, host)
-		}
+		hosts = append(hosts, r.NvmeHosts...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}
@@ -433,9 +427,7 @@ func (c *Client) NvmeSubsystemMapGetIter(parameters []string) (subsystemMaps []N
 		if err != nil {
 			return
 		}
-		for _, subsystemMap := range r.NvmeSubsystemMaps {
-			subsystemMaps = append(subsystemMaps, subsystemMap)
-		}
+		subsystemMaps = append(subsystemMaps, r.NvmeSubsystemMaps...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}
@@ -496,9 +488,7 @@ func (c *Client) NvmeInterfaceGetIter(parameters []string) (nvmeInterfaces []Nvm
 		if err != nil {
 			return
 		}
-		for _, nvmeInterface := range r.NvmeInterfaces {
-			nvmeInterfaces = append(nvmeInterfaces, nvmeInterface)
-		}
+		nvmeInterfaces = append(nvmeInterfaces, r.NvmeInterfaces...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}

@@ -72,9 +72,7 @@ func (c *Client) IpInterfaceGetIter(parameters []string) (ipInterfaces []IpInter
 		if err != nil {
 			return
 		}
-		for _, ipInterface := range r.IpInterfaces {
-			ipInterfaces = append(ipInterfaces, ipInterface)
-		}
+		ipInterfaces = append(ipInterfaces, r.IpInterfaces...)
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}
