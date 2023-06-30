@@ -54,9 +54,7 @@ func (c *Client) ExportPolicyGetIter(parameters []string) (expPolicies []ExportP
 		if err != nil {
 			return
 		}
-
 		expPolicies = append(expPolicies, r.ExportPolicies...)
-
 		if r.IsPaginate() {
 			path = r.GetNextRef()
 			reqParameters = []string{}
