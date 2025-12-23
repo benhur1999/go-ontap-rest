@@ -221,11 +221,14 @@ func (c *Client) Do(req *http.Request, v interface{}) (resp *RestResponse, err e
 	ctx, cncl := context.WithTimeout(context.Background(), c.ResponseTimeout)
 	defer cncl()
 	for i := 0; i < DO_RETRY_ATTEMPTS; i++ {
-		if resp, err = checkResp(c.client.Do(req.WithContext(ctx))); err == nil {
-			break
-		}
-		if !(resp.ErrorResponse.Error.Code == ERROR_TEMPORARY_UNAVAILABLE || resp.HttpResponse.StatusCode == 429 || resp.HttpResponse.StatusCode == 502 || resp.HttpResponse.StatusCode == 503) {
-			return
+		httpResponse, httpError := c.client.Do(req.WithContext(ctx))
+		if httpError == nil {
+			if resp, err = checkResp(httpResponse, httpError); err == nil {
+				break
+			}
+			if !(resp.ErrorResponse.Error.Code == ERROR_TEMPORARY_UNAVAILABLE || resp.HttpResponse.StatusCode == 429 || resp.HttpResponse.StatusCode == 502 || resp.HttpResponse.StatusCode == 503) {
+				return
+			}
 		}
 		time.Sleep(time.Duration(DO_RETRY_TIMEOUT * (i + 1)) * time.Second)
 	}
